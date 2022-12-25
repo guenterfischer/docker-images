@@ -33,8 +33,8 @@ The resulting directory structure should look like this:
     └── github.key.pub
 ```
 
-If set-up correctly, the ssh keys can be initialized with `ssh_init` from within the container.
-This function is defined in the `bashrc` file.
+If set-up correctly, the ssh keys can be initialized with `ssh_init` from within the container. \
+*Hint: This function is defined in the `bashrc` file*
 
 If no keys are provided, the docker build will fail.
 In this case, the related lines 190-194 has to be commented out in the Dockerfile.
