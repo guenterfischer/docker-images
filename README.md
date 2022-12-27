@@ -67,4 +67,23 @@ docker build --network=host -t avr ./avr
 ```
 
 
+### Image 'zephyr'
+
+This image contains tools regarding [Zephyr](https://github.com/zephyrproject-rtos/zephyr). \
+It uses the 'base' image as parent and thus has all common tools installed as well.
+
+The installation is done according to this guideline: \
+<https://docs.zephyrproject.org/latest/develop/getting_started/index.html>
+
+The image can be built with following command:
+
+```bash
+docker build --network=host -t zephyr ./zephyr
+```
+
+
+### Support
+
+If you appreciate this repository you can buy me a coffee
+
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/guenterfischer)
