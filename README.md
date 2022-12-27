@@ -53,3 +53,6 @@ It can be built with following command:
 ```bash
 docker build --network=host -t avr ./avr
 ```
+
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/guenterfischer)
