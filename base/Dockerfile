@@ -147,6 +147,9 @@ RUN pip3 install         \
 RUN gem install          \
   rubocop
 
+RUN npm install -g       \
+  prettier
+
 # Build and install neovim from scratch
 RUN cd /tmp \
   && git clone https://github.com/neovim/neovim \
