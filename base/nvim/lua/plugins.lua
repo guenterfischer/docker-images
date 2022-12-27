@@ -21,7 +21,9 @@ return require('packer').startup(function(use)
   -- Status Line
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = {
+      {'nvim-tree/nvim-web-devicons'}
+    }
   }
 
   -- Directory Diff

@@ -1,7 +1,8 @@
 FROM ubuntu:22.04
 
-# Define environment variable with image name
+# Set environment variable with image name
 ENV DOCKER_IMAGE=base
+
 
 ###############################################################################
 # UPDATE PACKET LISTS AND UPGRADE SYSTEM
@@ -31,6 +32,7 @@ RUN apt-get install -y \
   tree                 \
   tar                  \
   curl                 \
+  wget                 \
   git                  \
   python3              \
   python3-pip          \
@@ -116,32 +118,33 @@ USER root
 # Install prerequisites for neovim itself
 #   Some might be redundant, but I want to have
 #   a complete list regarding neovim here
-RUN apt-get install -y \
-  git                  \
-  make                 \
-  cmake                \
-  pkg-config           \
-  libtool              \
-  libtool-bin          \
-  gcc                  \
-  g++                  \
-  ninja-build          \
-  unzip                \
-  curl                 \
+RUN apt-get install -y   \
+  git                    \
+  make                   \
+  cmake                  \
+  pkg-config             \
+  libtool                \
+  libtool-bin            \
+  gcc                    \
+  g++                    \
+  ninja-build            \
+  unzip                  \
+  curl                   \
   gettext
 
 # Install prerequisites for neovim plugins
 #   Again, some might be redundant
-RUN apt-get install -y \
-  fonts-powerline      \
-  clangd               \
+RUN apt-get install -y   \
+  fonts-powerline        \
+  clangd                 \
   clang-format
 
-RUN pip3 install       \
-  autopep8             \
-  cmakelang
+RUN pip3 install         \
+  autopep8               \
+  cmakelang              \
+  cmake-language-server
 
-RUN gem install        \
+RUN gem install          \
   rubocop
 
 # Build and install neovim from scratch
