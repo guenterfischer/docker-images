@@ -1,6 +1,5 @@
-# Docker Images based on Ubuntu 22.04
 
-## Docker Image 'base'
+### Image 'base'
 
 This acts as base container with all basic tools, settings, etc.
 
@@ -42,3 +41,15 @@ In this case, the related lines 190-194 has to be commented out in the Dockerfil
 #### nvim
 
 This directory contains the configuration for neovim.
+
+
+### Image 'avr'
+
+This image contains tools for the programming of AVR µControllers. \
+By default it uses the 'base' image as parent and thus has all common tools installed as well.
+
+It can be built with following command:
+
+```bash
+docker build --network=host -t avr ./avr
+```
