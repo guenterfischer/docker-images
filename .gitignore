@@ -1,0 +1,7 @@
+
+# Ignore Git Config
+.gitconfig
+
+# Ignore SSH-Keys
+*.key
+*.key.pub

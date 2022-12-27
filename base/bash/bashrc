@@ -1,0 +1,29 @@
+# History search with arrows
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\e[C": forward-char'
+bind '"\e[D": backward-char'
+
+# Convenient directory handling
+alias ..='cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias ..6='cd ../../../../../..'
+
+# Neovim
+alias n="nvim"
+
+# Load custom prompt
+if [[ -f ~/.bash_prompt ]]; then
+  . ~/.bash_prompt
+fi
+
+# Use english locales for git
+alias git='LANG=en_US.UTF-8 git'
+
+# SSH initialization
+function ssh_init() {
+  eval $(keychain --eval --nogui ~/.ssh/*.key)
+}
