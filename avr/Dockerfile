@@ -5,8 +5,9 @@ ARG DOCKER_PARENT_IMAGE=base
 # Specify parent image
 FROM ${DOCKER_PARENT_IMAGE}:latest
 
-# Define environment variable with image name
+# Set environment variable with image name
 ENV DOCKER_IMAGE=avr
+
 
 ###############################################################################
 # INSTALL AVR TOOLS

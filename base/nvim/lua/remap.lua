@@ -15,16 +15,16 @@ vim.keymap.set("n", "<leader>bn", ":bnext<CR>")
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>")
 vim.keymap.set("n", "<leader>bd", ":bprevious <BAR> bdelete #<CR>")
 
--- NERDTree
-vim.keymap.set("n", "<leader>no", ":NERDTreeFocus<CR>")
-vim.keymap.set("n", "<leader>nf", ":NERDTreeFind<CR>")
-vim.keymap.set("n", "<leader>nt", ":NERDTreeToggle<CR>")
-
 -- Diff
 vim.keymap.set("n", "<leader>dt", ":diffthis<CR>")
 vim.keymap.set("n", "<leader>do", ":diffoff<CR>")
 vim.keymap.set("n", "<leader>dg", ":diffget<CR>")
 vim.keymap.set("n", "<leader>dp", ":diffput<CR>")
+
+-- NERDTree
+vim.keymap.set("n", "<leader>no", ":NERDTreeFocus<CR>")
+vim.keymap.set("n", "<leader>nf", ":NERDTreeFind<CR>")
+vim.keymap.set("n", "<leader>nt", ":NERDTreeToggle<CR>")
 
 -- Git
 vim.keymap.set("n", "<leader>gn", ":GitGutterNextHunk<CR>")
