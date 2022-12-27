@@ -38,7 +38,8 @@ RUN apt-get install -y \
   ruby                 \
   ruby-dev             \
   clangd               \
-  keychain
+  keychain             \
+  bash-completion
 
 RUN apt-get autoremove -y && apt-get clean
 
