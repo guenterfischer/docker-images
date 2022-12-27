@@ -9,10 +9,6 @@ require("formatter").setup {
   log_level = vim.log.levels.WARN,
   -- All formatter configurations are opt-in
   filetype = {
-    lua = {
-      require("formatter.filetypes.lua").stylua,
-    },
-
     python = {
       require("formatter.filetypes.python").autopep8,
     },
@@ -31,10 +27,6 @@ require("formatter").setup {
 
     yaml = {
       require("formatter.filetypes.yaml").pyaml,
-    },
-
-    markdown = {
-      require("formatter.filetypes.markdown").prettier,
     },
 
     c = {

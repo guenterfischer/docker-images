@@ -21,14 +21,15 @@ lsp.ensure_installed({
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<leader>lp'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<leader>ln'] = cmp.mapping.select_next_item(cmp_select),
-  ['<leader>ly'] = cmp.mapping.confirm({ select = true }),
-  ["<leader>lc"] = cmp.mapping.complete(),
+  ['C-p'] = cmp.mapping.select_prev_item(cmp_select),
+  ['C-n'] = cmp.mapping.select_next_item(cmp_select),
+  ['C-y'] = cmp.mapping.confirm({ select = true }),
+  ["C-Space"] = cmp.mapping.complete(),
 })
 
 lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
+  mapping = cmp_mappings,
+  completion =  { autocomplete = false }
 })
 
 lsp.set_preferences({
