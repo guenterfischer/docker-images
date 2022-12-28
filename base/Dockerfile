@@ -142,7 +142,9 @@ RUN apt-get install -y   \
 RUN pip3 install         \
   autopep8               \
   cmakelang              \
-  cmake-language-server
+  cmake-language-server  \
+  shfmt-py               \
+  pyaml
 
 RUN gem install          \
   rubocop
@@ -176,6 +178,7 @@ RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 COPY --chown=docker:docker nvim/after/.  /home/docker/.config/nvim/after
 
 RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+RUN nvim --headless -c 'LspZeroSetupServers' -c 'sleep 30' -c 'quitall'
 
 
 ###############################################################################

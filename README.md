@@ -84,6 +84,6 @@ docker build --network=host -t zephyr ./zephyr
 
 ### Support
 
-If you appreciate this repository you can buy me a coffee
+If you like this repository, a coffee would be much appreciated :-)
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/guenterfischer)
