@@ -41,7 +41,8 @@ RUN apt-get install -y \
   ruby-dev             \
   clangd               \
   keychain             \
-  bash-completion
+  bash-completion      \
+  iproute2
 
 RUN apt-get autoremove -y && apt-get clean
 
