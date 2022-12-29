@@ -1,24 +1,24 @@
 # ~/.bash_prompt
 
-# Default Colors
+# default colors
 RGB_COLOR_WHITE='254'
 RGB_COLOR_GREEN='28'
 RGB_COLOR_YELLOW='136'
 RGB_COLOR_RED='124'
 
-# Colors => Exit Code
+# colors => exit code
 RGB_COLOR_EXIT_CODE_OK_FG=$RGB_COLOR_GREEN
 RGB_COLOR_EXIT_CODE_ERROR_FG=$RGB_COLOR_RED
 
-# Colors => User
+# colors => user
 RGB_COLOR_USER_BG='24'
 RGB_COLOR_USER_FG=$RGB_COLOR_WHITE
 
-# Colors => Directory
+# colors => directory
 RGB_COLOR_DIR_BG='236'
 RGB_COLOR_DIR_FG=$RGB_COLOR_WHITE
 
-# Colors => Git
+# colors => git
 RGB_COLOR_GIT_OK_BG=$RGB_COLOR_GREEN
 RGB_COLOR_GIT_DIRTY_BG=$RGB_COLOR_RED
 RGB_COLOR_GIT_DELETED_BG=$RGB_COLOR_RED
@@ -28,20 +28,20 @@ RGB_COLOR_GIT_RENAMED_BG=$RGB_COLOR_RED
 RGB_COLOR_GIT_AHEAD_BG='30'
 RGB_COLOR_GIT_FG=$RGB_COLOR_WHITE
 
-# Colors => User Input
+# colors => user input
 RGB_COLOR_INPUT_FG=$RGB_COLOR_WHITE
 
-# Color Reset
+# color reset
 COLOR_RESET="\e[0m"
 
-# Special Characters
-# Note, this separator will require `fonts-powerline` to be installed!
+# special characters
+# note, this separator will require `fonts-powerline` to be installed!
 SEPARATOR=$'\uE0B0'
 
-# Color Handling
-# $1: Foreground Color
-# $2: Background Color (optional)
-function set_color {
+# color handling
+# $1: foreground color
+# $2: background color (optional)
+function prompt_set_color {
   if [ "$#" -eq 2 ]; then
     echo -e "\e[0;38;5;$1;48;5;$2m"
   elif [ "$#" -eq 1 ]; then
@@ -49,10 +49,10 @@ function set_color {
   fi
 }
 
-# Color Handling
-# $1: Foreground Color
-# $2: Background Color (optional)
-function set_color_bold {
+# color handling
+# $1: foreground color
+# $2: background color (optional)
+function prompt_set_color_bold {
   if [ "$#" -eq 2 ]; then
     echo -e "\e[1;38;5;$1;48;5;$2m"
   elif [ "$#" -eq 1 ]; then
@@ -60,30 +60,30 @@ function set_color_bold {
   fi
 }
 
-# Build Info about the last Exit Code
-# $1: Last Exit Code
-function set_exit_code {
+# build info about the last exit code
+# $1: last exit code
+function prompt_set_exit_code {
   if [ $1 -eq 0 ]; then
-    PS1_EXIT_CODE="\[\$(set_color $RGB_COLOR_EXIT_CODE_OK_FG $RGB_COLOR_USER_BG)\]"
+    PS1_EXIT_CODE="\[\$(prompt_set_color $RGB_COLOR_EXIT_CODE_OK_FG $RGB_COLOR_USER_BG)\]"
     PS1_EXIT_CODE+=" ✔"
   else
-    PS1_EXIT_CODE="\[\$(set_color $RGB_COLOR_EXIT_CODE_ERROR_FG $RGB_COLOR_USER_BG)\]"
+    PS1_EXIT_CODE="\[\$(prompt_set_color $RGB_COLOR_EXIT_CODE_ERROR_FG $RGB_COLOR_USER_BG)\]"
     PS1_EXIT_CODE+=" ✘"
   fi
 }
 
-# Build the Common Info
-function set_common_info {
-  PS1_COMMON_INFO="\[\$(set_color $RGB_COLOR_USER_FG $RGB_COLOR_USER_BG)\]"
+# build the common info
+function prompt_set_common_info {
+  PS1_COMMON_INFO="\[\$(prompt_set_color $RGB_COLOR_USER_FG $RGB_COLOR_USER_BG)\]"
   PS1_COMMON_INFO+=" \u@$DOCKER_IMAGE "
-  PS1_COMMON_INFO+="\[\$(set_color $RGB_COLOR_USER_BG $RGB_COLOR_DIR_BG)\]"
+  PS1_COMMON_INFO+="\[\$(prompt_set_color $RGB_COLOR_USER_BG $RGB_COLOR_DIR_BG)\]"
   PS1_COMMON_INFO+="$SEPARATOR"
-  PS1_COMMON_INFO+="\[\$(set_color $RGB_COLOR_DIR_FG $RGB_COLOR_DIR_BG)\]"
+  PS1_COMMON_INFO+="\[\$(prompt_set_color $RGB_COLOR_DIR_FG $RGB_COLOR_DIR_BG)\]"
   PS1_COMMON_INFO+=" \w "
 }
 
-# Git Handling => Current Branch or Commit
-function git_branch {
+# git handling => current branch or commit
+function prompt_git_branch {
   local GIT_STATUS="$(LANG=en_US.UTF-8 git status 2> /dev/null)"
   local ON_BRANCH="On branch ([^${IFS}]*)"
   local ON_COMMIT="HEAD detached at ([^${IFS}]*)"
@@ -95,7 +95,7 @@ function git_branch {
   fi
 }
 
-# Git Handling => Status
+# git handling => status
 function git_status {
   LANG=en_US.UTF-8 git status 2> /dev/null | (
     unset dirty deleted untracked newfile ahead renamed
@@ -114,8 +114,8 @@ function git_status {
   )
 }
 
-# Git Handling => Bg Color depending on the Status
-function git_bg_color {
+# git handling => background color depending on the status
+function prompt_git_bg_color {
   local GIT_STATUS=$(git_status)
 
   if [[ -n $GIT_STATUS ]]; then
@@ -137,49 +137,49 @@ function git_bg_color {
   fi
 }
 
-# Build the Git Info
-function set_git_info {
-  local GIT_BRANCH="$(git_branch)"
+# build the git info
+function prompt_set_git_info {
+  local GIT_BRANCH="$(prompt_git_branch)"
   if [ -n "$GIT_BRANCH" ]; then
-    local GIT_BG_COLOR="$(git_bg_color)"
+    local GIT_BG_COLOR="$(prompt_git_bg_color)"
 
-    PS1_GIT_INFO="\[\$(set_color $RGB_COLOR_DIR_BG $GIT_BG_COLOR)\]"
+    PS1_GIT_INFO="\[\$(prompt_set_color $RGB_COLOR_DIR_BG $GIT_BG_COLOR)\]"
     PS1_GIT_INFO+="$SEPARATOR"
-    PS1_GIT_INFO+="\[\$(set_color $RGB_COLOR_GIT_FG $GIT_BG_COLOR)\]"
+    PS1_GIT_INFO+="\[\$(prompt_set_color $RGB_COLOR_GIT_FG $GIT_BG_COLOR)\]"
     PS1_GIT_INFO+="$GIT_BRANCH"
-    PS1_GIT_INFO+="\[\$(set_color $GIT_BG_COLOR)\]"
+    PS1_GIT_INFO+="\[\$(prompt_set_color $GIT_BG_COLOR)\]"
     PS1_GIT_INFO+="$SEPARATOR"
   else
-    PS1_GIT_INFO="\[\$(set_color $RGB_COLOR_DIR_BG)\]"
+    PS1_GIT_INFO="\[\$(prompt_set_color $RGB_COLOR_DIR_BG)\]"
     PS1_GIT_INFO+="$SEPARATOR"
   fi
 }
 
-# Build the User Input
-function set_input {
-  PS1_INPUT="\[\$(set_color_bold $RGB_COLOR_INPUT_FG)\]"
+# build the user input
+function prompt_set_input {
+  PS1_INPUT="\[\$(prompt_set_color_bold $RGB_COLOR_INPUT_FG)\]"
   PS1_INPUT+=" \$ "
   PS1_INPUT+="\[$COLOR_RESET\]"
 }
 
-# Overwrite the Prompt Command
+# overwrite the prompt command
 PROMPT_COMMAND=__prompt_command
 __prompt_command() {
   local EXIT_CODE="$?"
 
-  # Build string regarding the last exit code
-  set_exit_code $EXIT_CODE
+  # build string regarding the last exit code
+  prompt_set_exit_code $EXIT_CODE
 
-  # Build string regarding the common info (user, directory, ...)
-  set_common_info
+  # build string regarding the common info (user, directory, ...)
+  prompt_set_common_info
 
-  # Build string regarding the git status
-  set_git_info
+  # build string regarding the git status
+  prompt_set_git_info
 
-  # Build string regarding the user input
-  set_input
+  # build string regarding the user input
+  prompt_set_input
 
-  # Build Prompt
+  # build prompt
   if (tput cuu1 && tput sc && tput rc && tput el) >/dev/null 2>&1
   then
     PS1="
