@@ -4,6 +4,7 @@ local lsp = require('lsp-zero')
 
 lsp.preset('recommended')
 
+-- Hint: List all available servers with ':help lspconfig-all'
 lsp.ensure_installed({
   'bashls',
   'clangd',
@@ -14,7 +15,7 @@ lsp.ensure_installed({
   'jsonls',
   'sumneko_lua',
   'tsserver',
-  'ruby_ls',
+  'solargraph',
   'yamlls'
 })
 

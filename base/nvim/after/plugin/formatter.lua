@@ -1,5 +1,5 @@
 -- ~/.config/nvim/after/plugin/formatter.lua
---
+
 -- Utilities for creating configurations
 local util = require "formatter.util"
 

@@ -41,7 +41,8 @@ RUN apt-get install -y \
   ruby-dev             \
   clangd               \
   keychain             \
-  bash-completion
+  bash-completion      \
+  iproute2
 
 RUN apt-get autoremove -y && apt-get clean
 
@@ -142,10 +143,15 @@ RUN apt-get install -y   \
 RUN pip3 install         \
   autopep8               \
   cmakelang              \
-  cmake-language-server
+  cmake-language-server  \
+  shfmt-py               \
+  pyaml
 
 RUN gem install          \
   rubocop
+
+RUN npm install -g       \
+  prettier
 
 # Build and install neovim from scratch
 RUN cd /tmp \
@@ -173,6 +179,7 @@ RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 COPY --chown=docker:docker nvim/after/.  /home/docker/.config/nvim/after
 
 RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+RUN nvim --headless -c 'LspZeroSetupServers' -c 'sleep 30' -c 'quitall'
 
 
 ###############################################################################
