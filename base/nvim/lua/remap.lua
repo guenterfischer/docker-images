@@ -21,14 +21,12 @@ vim.keymap.set("n", "<leader>do", ":diffoff<CR>")
 vim.keymap.set("n", "<leader>dg", ":diffget<CR>")
 vim.keymap.set("n", "<leader>dp", ":diffput<CR>")
 
--- NERDTree
-vim.keymap.set("n", "<leader>no", ":NERDTreeFocus<CR>")
-vim.keymap.set("n", "<leader>nf", ":NERDTreeFind<CR>")
-vim.keymap.set("n", "<leader>nt", ":NERDTreeToggle<CR>")
-
 -- Git
 vim.keymap.set("n", "<leader>gn", ":GitGutterNextHunk<CR>")
 vim.keymap.set("n", "<leader>gp", ":GitGutterPrevHunk<CR>")
 vim.keymap.set("n", "<leader>gd", ":GitGutterPreviewHunk<CR>")
 vim.keymap.set("n", "<leader>gs", ":GitGutterStageHunk<CR>")
 vim.keymap.set("n", "<leader>gu", ":GitGutterUndoHunk<CR>")
+
+-- Save w/o formatting
+vim.keymap.set("n", ":W", ":noautocmd w")

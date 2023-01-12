@@ -138,7 +138,8 @@ RUN apt-get install -y   \
 RUN apt-get install -y   \
   fonts-powerline        \
   clangd                 \
-  clang-format
+  clang-format           \
+  ripgrep
 
 RUN pip3 install         \
   autopep8               \

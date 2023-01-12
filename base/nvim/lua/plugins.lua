@@ -15,8 +15,19 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- Navigation Tree
-  use 'scrooloose/nerdtree'
+  -- Navigation
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {
+      {'nvim-lua/plenary.nvim'}
+    }
+  }
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      {'nvim-tree/nvim-web-devicons'}
+    }
+  }
 
   -- Status Line
   use {
