@@ -52,12 +52,16 @@ RUN apt-get autoremove -y && apt-get clean
 ###############################################################################
 
 RUN pip3 install --upgrade \
+  invoke                   \
   flake8                   \
   uvicorn                  \
   fastapi                  \
+  typer[all]               \
   gunicorn                 \
   cryptography             \
-  termcolor
+  termcolor                \
+  numpy                    \
+  conan
 
 
 ###############################################################################
@@ -92,6 +96,18 @@ RUN apt-get -y install \
 
 
 ###############################################################################
+# INSTALL clang
+###############################################################################
+
+RUN apt-get update
+RUN apt-get -y install \
+  clang --install-suggests    \
+  clang-tidy                  \
+  clang-14 --install-suggests \
+  clang-tidy-14
+
+
+###############################################################################
 # ADD A NEW USER NAMED 'docker'
 ###############################################################################
 
@@ -107,6 +123,14 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER docker
 WORKDIR /home/docker
+
+
+###############################################################################
+# INSTALL POETRY
+###############################################################################
+
+RUN curl -sSL https://install.python-poetry.org | python3 -
+ENV PATH="${PATH}:/home/docker/.local/bin"
 
 
 ###############################################################################
@@ -179,8 +203,8 @@ RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 COPY --chown=docker:docker nvim/after/.  /home/docker/.config/nvim/after
 
-RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-RUN nvim --headless -c 'LspZeroSetupServers' -c 'sleep 30' -c 'quitall'
+RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' -c 'sleep 30'
+RUN nvim --headless -c 'LspZeroSetupServers' -c 'sleep 45' -c 'quitall'
 
 
 ###############################################################################
@@ -202,9 +226,8 @@ COPY --chown=docker:docker bash/bash_prompt /home/docker/.bash_prompt
 COPY --chown=docker:docker git/. /home/docker/
 RUN chmod 600 /home/docker/.ssh/*.key
 
-RUN  ssh-keyscan bitbucket.org >> /home/docker/.ssh/known_hosts \
-  && ssh-keyscan github.com    >> /home/docker/.ssh/known_hosts
-
+RUN ssh-keyscan bitbucket.org >> /home/docker/.ssh/known_hosts \
+ && ssh-keyscan github.com    >> /home/docker/.ssh/known_hosts
 
 # Finally switch to user 'docker'
 USER docker

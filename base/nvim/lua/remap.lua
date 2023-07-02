@@ -28,5 +28,5 @@ vim.keymap.set("n", "<leader>gd", ":GitGutterPreviewHunk<CR>")
 vim.keymap.set("n", "<leader>gs", ":GitGutterStageHunk<CR>")
 vim.keymap.set("n", "<leader>gu", ":GitGutterUndoHunk<CR>")
 
--- Save w/o formatting
-vim.keymap.set("n", ":W", ":noautocmd w")
+-- Miscellaneous
+vim.keymap.set("n", "<leader>o", "o<ESC>")
