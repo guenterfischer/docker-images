@@ -42,7 +42,8 @@ RUN apt-get install -y \
   clangd               \
   keychain             \
   bash-completion      \
-  iproute2
+  iproute2             \
+  cargo
 
 RUN apt-get autoremove -y && apt-get clean
 
@@ -176,6 +177,9 @@ RUN pip3 install         \
 RUN gem install          \
   rubocop
 
+RUN cargo install        \
+  neocmakelsp
+
 RUN npm install -g       \
   prettier               \
   tree-sitter-cli
@@ -200,13 +204,11 @@ USER docker
 
 # Install AstroNvim
 RUN git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
-RUN nvim --headless "+Lazy! sync" +qa
-RUN nvim --headless "+Lazy! install" +qa
+RUN nvim --headless -c "autocmd User LazySync quitall" -c "Lazy sync"
 
 # Add own config
 RUN git clone https://github.com/guenterfischer/astronvim.git ~/.config/nvim/lua/user
-RUN nvim --headless "+Lazy! sync" +qa
-RUN nvim --headless "+Lazy! install" +qa
+RUN nvim --headless -c "autocmd User LazySync quitall" -c "Lazy sync"
 
 
 ###############################################################################

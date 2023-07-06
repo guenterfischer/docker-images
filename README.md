@@ -40,9 +40,7 @@ In this case, the related lines has to be commented out in the Dockerfile.
 
 #### nvim
 
-This directory contains the configuration for neovim.
-
-One of the used plugins is [lualine](https://github.com/nvim-lualine/lualine.nvim). \
+[AstroNvim](https://github.com/AstroNvim/AstroNvim) is used for the configuration. \
 In order to use all symbols, the appropriate [nerd font](https://www.nerdfonts.com/) has to be installed.
 
 This can be done as follows:
