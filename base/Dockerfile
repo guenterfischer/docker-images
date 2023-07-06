@@ -42,7 +42,8 @@ RUN apt-get install -y \
   clangd               \
   keychain             \
   bash-completion      \
-  iproute2
+  iproute2             \
+  cargo
 
 RUN apt-get autoremove -y && apt-get clean
 
@@ -163,7 +164,8 @@ RUN apt-get install -y   \
   fonts-powerline        \
   clangd                 \
   clang-format           \
-  ripgrep
+  ripgrep                \
+  gdu
 
 RUN pip3 install         \
   autopep8               \
@@ -175,8 +177,18 @@ RUN pip3 install         \
 RUN gem install          \
   rubocop
 
+RUN cargo install        \
+  neocmakelsp
+
 RUN npm install -g       \
-  prettier
+  prettier               \
+  tree-sitter-cli
+
+RUN cd /tmp \
+  && LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*') \
+  && curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" \
+  && tar xf lazygit.tar.gz lazygit \
+  && install lazygit /usr/local/bin
 
 # Build and install neovim from scratch
 RUN cd /tmp \
@@ -190,21 +202,13 @@ RUN rm -rf /tmp/neovim
 # Configuration has to be done as 'docker'
 USER docker
 
-# Configure neovim
-#   The configuration has to be done in two steps,
-#   at first the plugins itself, then the plugin specific part
-COPY --chown=docker:docker nvim/init.lua /home/docker/.config/nvim/
-COPY --chown=docker:docker nvim/lua/.    /home/docker/.config/nvim/lua
+# Install AstroNvim
+RUN git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+RUN nvim --headless -c "autocmd User LazySync quitall" -c "Lazy sync"
 
-RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim \
-  /home/docker/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-
-COPY --chown=docker:docker nvim/after/.  /home/docker/.config/nvim/after
-
-RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' -c 'sleep 30'
-RUN nvim --headless -c 'LspZeroSetupServers' -c 'sleep 45' -c 'quitall'
+# Add own config
+RUN git clone https://github.com/guenterfischer/astronvim.git ~/.config/nvim/lua/user
+RUN nvim --headless -c "autocmd User LazySync quitall" -c "Lazy sync"
 
 
 ###############################################################################
