@@ -40,10 +40,10 @@ RUN apt-get install -y \
   ruby                 \
   ruby-dev             \
   clangd               \
+  build-essential      \
   keychain             \
   bash-completion      \
-  iproute2             \
-  cargo
+  iproute2
 
 RUN apt-get autoremove -y && apt-get clean
 
@@ -82,6 +82,18 @@ RUN gem install \
 
 
 ###############################################################################
+# INSTALL clang
+###############################################################################
+
+RUN apt-get update
+RUN apt-get -y install \
+  clang --install-suggests    \
+  clang-tidy                  \
+  clang-14 --install-suggests \
+  clang-tidy-14
+
+
+###############################################################################
 # INSTALL Node.js
 ###############################################################################
 
@@ -94,18 +106,6 @@ RUN apt-get update
 RUN apt-get -y install \
   nodejs               \
   yarn
-
-
-###############################################################################
-# INSTALL clang
-###############################################################################
-
-RUN apt-get update
-RUN apt-get -y install \
-  clang --install-suggests    \
-  clang-tidy                  \
-  clang-14 --install-suggests \
-  clang-tidy-14
 
 
 ###############################################################################
@@ -132,6 +132,13 @@ WORKDIR /home/docker
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="${PATH}:/home/docker/.local/bin"
+
+
+###############################################################################
+# INSTALL RUST
+###############################################################################
+
+RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | bash -s -- -y
 
 
 ###############################################################################
@@ -177,8 +184,8 @@ RUN pip3 install         \
 RUN gem install          \
   rubocop
 
-RUN cargo install        \
-  neocmakelsp
+# RUN cargo install        \
+#   neocmakelsp
 
 RUN npm install -g       \
   prettier               \
