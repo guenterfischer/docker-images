@@ -44,5 +44,25 @@ RUN cd /tmp \
   && ./zephyr-sdk-0.13.0-linux-x86_64-setup.run -- -d ~/zephyr-sdk-0.13.0
 
 
+###############################################################################
+# INSTALL OPENOCD
+###############################################################################
+
+USER root
+
+# Install dependencies
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt-get install -y automake autoconf build-essential texinfo libtool libftdi-dev libusb-1.0-0-dev
+
+# Clone repository and build openocd
+RUN cd /opt \
+  && git clone https://github.com/raspberrypi/openocd.git --branch rp2040-v0.12.0 --depth=1 --no-single-branch
+RUN cd /opt/openocd \
+  && ./bootstrap    \
+  && ./configure    \
+  && make -j        \
+  && make install
+
 # Switch back to user 'docker'
 USER docker
