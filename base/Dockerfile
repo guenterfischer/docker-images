@@ -135,10 +135,14 @@ ENV PATH="${PATH}:/home/docker/.local/bin"
 
 
 ###############################################################################
-# INSTALL RUST
+# INSTALL DEVCHAIN
 ###############################################################################
 
-RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | bash -s -- -y
+RUN cd /tmp \
+  && git clone https://github.com/guenterfischer/devchain.git \
+  && cd devchain \
+  && poetry build \
+  && sudo pip install ./dist/*.whl
 
 
 ###############################################################################
@@ -183,9 +187,6 @@ RUN pip3 install         \
 
 RUN gem install          \
   rubocop
-
-# RUN cargo install        \
-#   neocmakelsp
 
 RUN npm install -g       \
   prettier               \
